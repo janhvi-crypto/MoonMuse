@@ -1,55 +1,84 @@
+import { useState } from "react";
 import { AmbientBackground } from "@/components/dreamscape/AmbientBackground";
+import { TopNav } from "@/components/dreamscape/TopNav";
+import { Hero } from "@/components/dreamscape/Hero";
 import { MusicPlayer } from "@/components/dreamscape/MusicPlayer";
 import { SpotifyPlayer } from "@/components/dreamscape/SpotifyPlayer";
 import { SoundscapeMixer } from "@/components/dreamscape/SoundscapeMixer";
 import { BreathingOrb } from "@/components/dreamscape/BreathingOrb";
-import { Journal } from "@/components/dreamscape/Journal";
-import { Diary } from "@/components/dreamscape/Diary";
+import { Scrapbook } from "@/components/dreamscape/Scrapbook";
+import { MemoryShelf } from "@/components/dreamscape/MemoryShelf";
 import { Wishlist } from "@/components/dreamscape/Wishlist";
 import { SketchPad } from "@/components/dreamscape/SketchPad";
+import type { Memory } from "@/lib/memory-store";
+
+const SectionLabel = ({ chapter, title, sub }: { chapter: string; title: string; sub?: string }) => (
+  <div className="mb-8 px-2">
+    <p className="font-sans text-xs tracking-[0.4em] text-cloud-pink mb-2">✦  {chapter}</p>
+    <h2 className="font-serif italic text-4xl md:text-5xl text-paper ink-stroke">{title}</h2>
+    {sub && <p className="font-hand text-2xl text-cloud-lilac mt-1">{sub}</p>}
+  </div>
+);
 
 const Index = () => {
+  const [editing, setEditing] = useState<Memory | null>(null);
+
   return (
     <div className="min-h-screen relative">
       <AmbientBackground />
+      <TopNav />
 
-      <header className="relative pt-20 pb-16 px-6 text-center">
-        <div className="absolute left-1/2 -translate-x-1/2 top-6 w-40 h-40 rounded-full bg-gradient-to-b from-sun-glow to-sun blur-3xl opacity-50 animate-drift" aria-hidden />
-        <p className="font-hand text-sun text-2xl mb-2 animate-sway inline-block">welcome back, traveler</p>
-        <h1 className="font-serif text-5xl md:text-7xl text-paper italic font-light tracking-tight mb-4 ink-stroke">
-          Sundown
-        </h1>
-        <p className="font-serif text-paper/80 text-lg md:text-xl max-w-xl mx-auto leading-relaxed">
-          A quiet place for the long hours after code.
-          <br />
-          <span className="font-hand text-petal text-2xl">stay a while.</span>
-        </p>
-      </header>
+      {/* SCENE 1 — moonlit hero */}
+      <Hero />
 
-      <main className="relative px-4 md:px-8 pb-24 max-w-6xl mx-auto">
-        <section className="grid gap-6 md:grid-cols-2 mb-6">
-          <SpotifyPlayer />
-          <MusicPlayer />
+      <main className="relative px-4 md:px-10 pb-32 max-w-6xl mx-auto space-y-24">
+        {/* SCENE 2 — the music room */}
+        <section>
+          <SectionLabel chapter="CHAPTER ONE" title="the music room" sub="press play — the night begins" />
+          <div className="grid gap-6 md:grid-cols-2">
+            <SpotifyPlayer />
+            <MusicPlayer />
+          </div>
         </section>
 
-        <section className="grid gap-6 md:grid-cols-2 mb-6">
-          <SoundscapeMixer />
-          <BreathingOrb />
+        {/* SCENE 3 — the window — soundscape + breathing */}
+        <section>
+          <SectionLabel chapter="CHAPTER TWO" title="open the window" sub="layer the world. soften the lungs." />
+          <div className="grid gap-6 md:grid-cols-2">
+            <SoundscapeMixer />
+            <BreathingOrb />
+          </div>
         </section>
 
-        <section className="grid gap-6 md:grid-cols-2 mb-6">
-          <Diary />
-          <Journal />
+        {/* SCENE 4 — the scrapbook (centerpiece, full width) */}
+        <section>
+          <SectionLabel
+            chapter="CHAPTER THREE"
+            title="the scrapbook"
+            sub={editing ? "editing a memory… ✎" : "tonight's blank page is waiting"}
+          />
+          <Scrapbook editing={editing} onSaved={() => setEditing(null)} />
         </section>
 
-        <section className="grid gap-6 md:grid-cols-2 mb-6">
-          <Wishlist />
-          <SketchPad />
+        {/* SCENE 5 — the memory shelf */}
+        <section>
+          <MemoryShelf onOpen={(m) => { setEditing(m); window.scrollTo({ top: document.body.scrollHeight * 0.55, behavior: "smooth" }); }} />
+        </section>
+
+        {/* SCENE 6 — wishes + sketch */}
+        <section>
+          <SectionLabel chapter="CHAPTER FOUR" title="small wishes, soft hands" sub="dreams to keep, lines to draw" />
+          <div className="grid gap-6 md:grid-cols-2">
+            <Wishlist />
+            <SketchPad />
+          </div>
         </section>
       </main>
 
-      <footer className="relative pb-12 text-center">
-        <p className="font-hand text-petal text-xl">the sun will rise again ✦</p>
+      <footer className="relative pb-16 text-center px-6">
+        <div className="h-px w-24 bg-cloud-pink/40 mx-auto mb-6" />
+        <p className="font-hand text-cloud-pink text-2xl">the moon will hold the sky for you ✦</p>
+        <p className="font-sans text-xs tracking-[0.3em] text-paper/40 mt-3">MOONLIT · A QUIET PLACE</p>
       </footer>
     </div>
   );
