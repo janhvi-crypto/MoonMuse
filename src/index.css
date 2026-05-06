@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&family=Homemade+Apple&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,65 +6,74 @@
 
 @layer base {
   :root {
-    /* Angela He dreamscape — crimson dusk meets magical night */
-    --background: 252 30% 8%;
-    --foreground: 30 60% 92%;
+    /* Moonlit dreamscape — pink clouds, pale moon, lilac night */
+    --background: 260 35% 12%;
+    --foreground: 320 30% 95%;
 
-    --dusk-deep: 252 35% 6%;
-    --dusk-mid: 250 30% 14%;
-    --dusk-soft: 248 25% 22%;
+    --night-deep: 258 40% 9%;
+    --night-mid: 260 35% 16%;
+    --night-soft: 262 30% 24%;
 
-    --sun: 8 80% 58%;
-    --sun-glow: 18 90% 65%;
-    --ember: 14 75% 50%;
+    --moon: 48 95% 88%;
+    --moon-glow: 42 100% 78%;
+    --moon-deep: 38 70% 60%;
 
-    --moon: 220 30% 88%;
-    --star: 48 90% 78%;
-    --petal: 340 65% 78%;
+    --cloud-pink: 335 80% 80%;
+    --cloud-rose: 340 70% 72%;
+    --cloud-lilac: 280 50% 75%;
+    --cloud-deep: 285 45% 45%;
 
-    --ink: 252 35% 4%;
-    --paper: 35 45% 90%;
-    --paper-warm: 30 50% 85%;
+    --star: 48 90% 85%;
+    --petal: 335 85% 78%;
+    --bow: 340 90% 82%;
 
-    --card: 250 28% 12%;
-    --card-foreground: 30 50% 92%;
+    --ink: 270 40% 15%;
+    --ink-soft: 270 30% 25%;
+    --paper: 35 50% 95%;
+    --paper-warm: 30 55% 90%;
+    --paper-pink: 340 60% 95%;
 
-    --popover: 250 30% 10%;
-    --popover-foreground: 30 50% 92%;
+    --card: 262 35% 16%;
+    --card-foreground: 320 30% 95%;
 
-    --primary: 8 80% 58%;
-    --primary-foreground: 35 50% 95%;
+    --popover: 262 35% 14%;
+    --popover-foreground: 320 30% 95%;
 
-    --secondary: 250 25% 20%;
-    --secondary-foreground: 30 50% 92%;
+    --primary: 335 80% 75%;
+    --primary-foreground: 270 40% 15%;
 
-    --muted: 250 20% 18%;
-    --muted-foreground: 30 25% 70%;
+    --secondary: 262 30% 22%;
+    --secondary-foreground: 320 30% 95%;
 
-    --accent: 340 50% 60%;
-    --accent-foreground: 35 50% 95%;
+    --muted: 262 25% 20%;
+    --muted-foreground: 320 20% 75%;
 
-    --destructive: 0 84% 60%;
+    --accent: 280 65% 75%;
+    --accent-foreground: 270 40% 15%;
+
+    --destructive: 0 70% 65%;
     --destructive-foreground: 35 50% 95%;
 
-    --border: 250 25% 22%;
-    --input: 250 25% 18%;
-    --ring: 8 80% 58%;
+    --border: 280 30% 30%;
+    --input: 262 30% 22%;
+    --ring: 335 80% 75%;
 
-    --radius: 1rem;
+    --radius: 1.25rem;
 
     /* Gradients */
-    --gradient-dusk: radial-gradient(ellipse at 50% 70%, hsl(8 75% 45% / 0.35) 0%, hsl(340 50% 30% / 0.2) 30%, hsl(250 35% 8%) 70%);
-    --gradient-sun: radial-gradient(circle, hsl(var(--sun-glow)) 0%, hsl(var(--sun)) 50%, hsl(var(--ember) / 0) 75%);
-    --gradient-paper: linear-gradient(135deg, hsl(35 45% 92%) 0%, hsl(30 40% 86%) 100%);
-    --gradient-card: linear-gradient(160deg, hsl(250 30% 16% / 0.7), hsl(252 35% 10% / 0.85));
+    --gradient-night: radial-gradient(ellipse at 30% 20%, hsl(280 50% 25% / 0.6) 0%, hsl(258 40% 9%) 70%);
+    --gradient-moon: radial-gradient(circle, hsl(var(--moon)) 0%, hsl(var(--moon-glow)) 60%, hsl(var(--moon-deep) / 0) 80%);
+    --gradient-paper: linear-gradient(160deg, hsl(35 55% 96%) 0%, hsl(340 50% 92%) 100%);
+    --gradient-paper-pink: linear-gradient(160deg, hsl(340 70% 96%) 0%, hsl(320 60% 90%) 100%);
+    --gradient-card: linear-gradient(160deg, hsl(280 35% 22% / 0.55), hsl(258 40% 12% / 0.75));
+    --gradient-glass: linear-gradient(135deg, hsl(335 60% 70% / 0.12), hsl(280 50% 50% / 0.08));
 
     /* Shadows */
-    --shadow-glow: 0 0 80px hsl(var(--sun) / 0.4), 0 0 30px hsl(var(--sun-glow) / 0.3);
-    --shadow-soft: 0 20px 60px -20px hsl(var(--ink) / 0.6);
-    --shadow-paper: 0 8px 30px hsl(var(--ink) / 0.4), inset 0 0 60px hsl(30 30% 70% / 0.15);
+    --shadow-moon: 0 0 100px hsl(var(--moon) / 0.4), 0 0 50px hsl(var(--moon-glow) / 0.3);
+    --shadow-soft: 0 25px 80px -20px hsl(258 50% 4% / 0.7);
+    --shadow-paper: 0 12px 40px hsl(258 40% 4% / 0.5), inset 0 0 80px hsl(340 50% 80% / 0.15);
+    --shadow-sticker: 0 4px 12px hsl(258 40% 4% / 0.4), 0 1px 2px hsl(0 0% 0% / 0.2);
 
-    /* Transitions */
     --ease-dream: cubic-bezier(0.22, 1, 0.36, 1);
   }
 }
@@ -75,33 +84,40 @@
     @apply bg-background text-foreground;
     font-family: 'Fraunces', serif;
     font-feature-settings: "ss01", "ss02";
-    background-image: var(--gradient-dusk);
-    background-attachment: fixed;
     overflow-x: hidden;
   }
-  ::selection { background: hsl(var(--sun) / 0.4); color: hsl(var(--paper)); }
+  ::selection { background: hsl(var(--cloud-pink) / 0.5); color: hsl(var(--paper)); }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: hsl(var(--night-deep)); }
+  ::-webkit-scrollbar-thumb { background: hsl(var(--cloud-pink) / 0.4); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: hsl(var(--cloud-pink) / 0.6); }
 }
 
 @layer utilities {
   .font-hand { font-family: 'Caveat', cursive; }
+  .font-write { font-family: 'Homemade Apple', cursive; }
   .font-serif-display { font-family: 'Fraunces', serif; }
   .font-sans-soft { font-family: 'Inter', sans-serif; }
 
   .text-paper { color: hsl(var(--paper)); }
-  .text-sun { color: hsl(var(--sun)); }
+  .text-moon { color: hsl(var(--moon)); }
   .text-star { color: hsl(var(--star)); }
   .text-petal { color: hsl(var(--petal)); }
+  .text-cloud-pink { color: hsl(var(--cloud-pink)); }
+  .text-cloud-lilac { color: hsl(var(--cloud-lilac)); }
 
-  .grain {
-    position: relative;
-  }
+  .bg-night-deep { background-color: hsl(var(--night-deep)); }
+  .bg-night-mid { background-color: hsl(var(--night-mid)); }
+  .bg-night-soft { background-color: hsl(var(--night-soft)); }
+  .bg-cloud-pink { background-color: hsl(var(--cloud-pink)); }
+  .bg-moon { background-color: hsl(var(--moon)); }
+
+  .grain { position: relative; }
   .grain::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.08;
-    mix-blend-mode: overlay;
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    opacity: 0.06; mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
@@ -111,40 +127,54 @@
     box-shadow: var(--shadow-paper);
     border-radius: var(--radius);
   }
+  .paper-pink {
+    background: var(--gradient-paper-pink);
+    color: hsl(var(--ink));
+    box-shadow: var(--shadow-paper);
+  }
 
-  .dream-card {
+  .glass-panel {
     background: var(--gradient-card);
-    backdrop-filter: blur(12px);
-    border: 1px solid hsl(var(--border) / 0.6);
-    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border: 1px solid hsl(var(--cloud-pink) / 0.18);
+    box-shadow: var(--shadow-soft), inset 0 1px 0 hsl(var(--cloud-pink) / 0.15);
   }
 
-  .sun-glow {
-    box-shadow: var(--shadow-glow);
-  }
+  .moon-glow { box-shadow: var(--shadow-moon); }
+  .sticker-shadow { filter: drop-shadow(var(--shadow-sticker)); }
 
-  .ink-stroke {
-    text-shadow: 0 1px 0 hsl(var(--ink) / 0.1);
+  .ink-stroke { text-shadow: 0 1px 0 hsl(var(--ink) / 0.15), 0 2px 30px hsl(var(--cloud-pink) / 0.3); }
+
+  .washi-tape {
+    position: absolute;
+    height: 22px;
+    background: repeating-linear-gradient(45deg, hsl(var(--cloud-pink) / 0.7) 0 8px, hsl(var(--bow) / 0.7) 8px 16px);
+    box-shadow: 0 2px 6px hsl(0 0% 0% / 0.2);
   }
 }
 
 @keyframes drift {
   0%, 100% { transform: translateY(0) translateX(0); }
-  50% { transform: translateY(-20px) translateX(10px); }
+  50% { transform: translateY(-15px) translateX(8px); }
+}
+@keyframes drift-slow {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(30px); }
 }
 @keyframes twinkle {
   0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.3); }
+  50% { opacity: 1; transform: scale(1.4); }
 }
 @keyframes float-up {
-  0% { transform: translateY(100vh) translateX(0); opacity: 0; }
-  10% { opacity: 0.6; }
-  90% { opacity: 0.6; }
-  100% { transform: translateY(-10vh) translateX(40px); opacity: 0; }
+  0% { transform: translateY(100vh) translateX(0) rotate(0); opacity: 0; }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.7; }
+  100% { transform: translateY(-10vh) translateX(60px) rotate(180deg); opacity: 0; }
 }
 @keyframes breathe {
-  0%, 100% { transform: scale(1); box-shadow: 0 0 60px hsl(var(--sun) / 0.4); }
-  50% { transform: scale(1.4); box-shadow: 0 0 120px hsl(var(--sun-glow) / 0.7); }
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.4); }
 }
 @keyframes sway {
   0%, 100% { transform: rotate(-2deg); }
@@ -154,10 +184,21 @@
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+@keyframes moon-pulse {
+  0%, 100% { box-shadow: 0 0 100px hsl(var(--moon) / 0.4), 0 0 50px hsl(var(--moon-glow) / 0.3); }
+  50% { box-shadow: 0 0 140px hsl(var(--moon) / 0.55), 0 0 70px hsl(var(--moon-glow) / 0.45); }
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
 
 .animate-drift { animation: drift 8s ease-in-out infinite; }
+.animate-drift-slow { animation: drift-slow 24s ease-in-out infinite; }
 .animate-twinkle { animation: twinkle 3s ease-in-out infinite; }
-.animate-float-up { animation: float-up 12s linear infinite; }
-.animate-breathe-in { animation: breathe 8s ease-in-out infinite; }
+.animate-float-up { animation: float-up 14s linear infinite; }
+.animate-breathe { animation: breathe 8s ease-in-out infinite; }
 .animate-sway { animation: sway 6s ease-in-out infinite; }
 .animate-fade-up { animation: fade-up 0.8s var(--ease-dream) both; }
+.animate-moon-pulse { animation: moon-pulse 6s ease-in-out infinite; }
+.animate-wiggle { animation: wiggle 0.6s ease-in-out infinite; }
