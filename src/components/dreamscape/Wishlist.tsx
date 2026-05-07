@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Star, Sparkles } from "lucide-react";
 
-interface Wish { id: string; text: string; granted: boolean; }
+interface Wish { id: string; text: string; granted: boolean; createdAt?: number; }
 const KEY = "sundown_wishes";
 
 export const Wishlist = () => {
@@ -14,7 +14,7 @@ export const Wishlist = () => {
 
   const add = () => {
     if (!draft.trim()) return;
-    setWishes([{ id: crypto.randomUUID(), text: draft, granted: false }, ...wishes]);
+    setWishes([{ id: crypto.randomUUID(), text: draft, granted: false, createdAt: Date.now() } as Wish, ...wishes]);
     setDraft("");
   };
 
