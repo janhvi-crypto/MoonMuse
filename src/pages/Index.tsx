@@ -10,6 +10,10 @@ import { Scrapbook } from "@/components/dreamscape/Scrapbook";
 import { MemoryShelf } from "@/components/dreamscape/MemoryShelf";
 import { Wishlist } from "@/components/dreamscape/Wishlist";
 import { SketchPad } from "@/components/dreamscape/SketchPad";
+import { ZodiacReading } from "@/components/dreamscape/ZodiacReading";
+import { TarotPick } from "@/components/dreamscape/TarotPick";
+import { MoodTracker } from "@/components/dreamscape/MoodTracker";
+import { SaveableJournal } from "@/components/dreamscape/SaveableJournal";
 import type { Memory } from "@/lib/memory-store";
 
 const SectionLabel = ({ chapter, title, sub }: { chapter: string; title: string; sub?: string }) => (
@@ -65,9 +69,28 @@ const Index = () => {
           <MemoryShelf onOpen={(m) => { setEditing(m); window.scrollTo({ top: document.body.scrollHeight * 0.55, behavior: "smooth" }); }} />
         </section>
 
-        {/* SCENE 6 — wishes + sketch */}
+        {/* SCENE 6 — daily fortune */}
         <section>
-          <SectionLabel chapter="CHAPTER FOUR" title="small wishes, soft hands" sub="dreams to keep, lines to draw" />
+          <SectionLabel chapter="CHAPTER FOUR" title="✦ daily fortune ✦" sub="the stars left a note for you" />
+          <div className="grid gap-6 md:grid-cols-2">
+            <ZodiacReading />
+            <TarotPick />
+          </div>
+        </section>
+
+        {/* SCENE 7 — saveable entries */}
+        <section>
+          <SectionLabel chapter="CHAPTER FIVE" title="soft little keepsakes" sub="moods, dreams, manifestations" />
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <MoodTracker />
+            <SaveableJournal kind="dream" />
+            <SaveableJournal kind="manifest" />
+          </div>
+        </section>
+
+        {/* SCENE 8 — wishes + sketch */}
+        <section>
+          <SectionLabel chapter="CHAPTER SIX" title="small wishes, soft hands" sub="dreams to keep, lines to draw" />
           <div className="grid gap-6 md:grid-cols-2">
             <Wishlist />
             <SketchPad />

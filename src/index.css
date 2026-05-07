@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&family=Homemade+Apple&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&family=Homemade+Apple&family=VT323&family=Press+Start+2P&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -97,6 +97,8 @@
 
 @layer utilities {
   .font-hand { font-family: 'Caveat', cursive; }
+  .font-pixel { font-family: 'VT323', 'Press Start 2P', monospace; letter-spacing: 0.05em; }
+  .font-pixel-tiny { font-family: 'Press Start 2P', monospace; }
   .font-write { font-family: 'Homemade Apple', cursive; }
   .font-serif-display { font-family: 'Fraunces', serif; }
   .font-sans-soft { font-family: 'Inter', sans-serif; }
