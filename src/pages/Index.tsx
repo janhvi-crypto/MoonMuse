@@ -14,6 +14,9 @@ import { ZodiacReading } from "@/components/dreamscape/ZodiacReading";
 import { TarotPick } from "@/components/dreamscape/TarotPick";
 import { MoodTracker } from "@/components/dreamscape/MoodTracker";
 import { SaveableJournal } from "@/components/dreamscape/SaveableJournal";
+import { EyeExercise } from "@/components/dreamscape/EyeExercise";
+import { YogaBreak } from "@/components/dreamscape/YogaBreak";
+import { MemoryCalendar } from "@/components/dreamscape/MemoryCalendar";
 import type { Memory } from "@/lib/memory-store";
 
 const SectionLabel = ({ chapter, title, sub }: { chapter: string; title: string; sub?: string }) => (
