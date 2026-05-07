@@ -91,13 +91,28 @@ const Index = () => {
           </div>
         </section>
 
-        {/* SCENE 8 — wishes + sketch */}
+        {/* SCENE 8 — body care: eye + yoga */}
         <section>
-          <SectionLabel chapter="CHAPTER SIX" title="small wishes, soft hands" sub="dreams to keep, lines to draw" />
+          <SectionLabel chapter="CHAPTER SIX" title="unwind the body" sub="for tired eyes & screen-stiff shoulders" />
+          <div className="grid gap-6 md:grid-cols-2">
+            <EyeExercise />
+            <YogaBreak />
+          </div>
+        </section>
+
+        {/* SCENE 9 — wishes + sketch */}
+        <section>
+          <SectionLabel chapter="CHAPTER SEVEN" title="small wishes, soft hands" sub="dreams to keep, lines to draw" />
           <div className="grid gap-6 md:grid-cols-2">
             <Wishlist />
             <SketchPad />
           </div>
+        </section>
+
+        {/* SCENE 10 — calendar of everything */}
+        <section>
+          <SectionLabel chapter="CHAPTER EIGHT" title="✦ memory calendar ✦" sub="every wish, dream & diary in one little month" />
+          <MemoryCalendar />
         </section>
       </main>
 
