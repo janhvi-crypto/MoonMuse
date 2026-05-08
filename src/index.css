@@ -212,3 +212,6 @@
 .animate-fade-up { animation: fade-up 0.8s var(--ease-dream) both; }
 .animate-moon-pulse { animation: moon-pulse 6s ease-in-out infinite; }
 .animate-wiggle { animation: wiggle 0.6s ease-in-out infinite; }
+
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+.animate-spin-slow { animation: spin-slow 12s linear infinite; }
