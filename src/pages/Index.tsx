@@ -128,9 +128,6 @@ const Index = () => {
           <SectionLabel chapter="CHAPTER TEN" title="pinky photobooth" sub="3 little frames · stickers · download forever" />
           <Photobooth />
         </section>
-          <SectionLabel chapter="CHAPTER EIGHT" title="✦ memory calendar ✦" sub="every wish, dream & diary in one little month" />
-          <MemoryCalendar />
-        </section>
       </main>
 
       <footer className="relative pb-16 text-center px-6">
