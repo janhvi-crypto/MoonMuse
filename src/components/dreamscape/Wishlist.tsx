@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
 import { Star, Sparkles } from "lucide-react";
+import { cloudSync } from "@/lib/cloud-sync";
 
 interface Wish { id: string; text: string; granted: boolean; createdAt?: number; }
 const KEY = "sundown_wishes";
 
 export const Wishlist = () => {
-  const [wishes, setWishes] = useState<Wish[]>(() => {
-    try { return JSON.parse(localStorage.getItem(KEY) || "[]"); } catch { return []; }
-  });
+  const [wishes, setWishes] = useState<Wish[]>(() => cloudSync.get<Wish[]>(KEY, []));
   const [draft, setDraft] = useState("");
 
-  useEffect(() => { localStorage.setItem(KEY, JSON.stringify(wishes)); }, [wishes]);
+  useEffect(() => cloudSync.subscribe(KEY, () => setWishes(cloudSync.get<Wish[]>(KEY, []))), []);
+
+  const persist = (next: Wish[]) => { setWishes(next); cloudSync.set(KEY, next); };
 
   const add = () => {
     if (!draft.trim()) return;
-    setWishes([{ id: crypto.randomUUID(), text: draft, granted: false, createdAt: Date.now() } as Wish, ...wishes]);
+    persist([{ id: crypto.randomUUID(), text: draft, granted: false, createdAt: Date.now() }, ...wishes]);
     setDraft("");
   };
 
@@ -28,35 +29,22 @@ export const Wishlist = () => {
       <p className="font-hand text-muted-foreground text-base mb-4">small dreams, kept close</p>
 
       <form onSubmit={(e) => { e.preventDefault(); add(); }} className="flex gap-2 mb-4">
-        <input
-          value={draft}
-          onChange={(e) => setDraft(e.target.value)}
-          placeholder="i wish..."
-          className="flex-1 bg-dusk-mid border border-border rounded-lg px-3 py-2 font-hand text-lg text-paper placeholder:text-muted-foreground/60 outline-none focus:border-sun transition-colors"
-        />
-        <button type="submit" className="bg-sun text-ink rounded-lg px-4 hover:bg-sun-glow transition-colors">
+        <input value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="i wish..."
+          className="flex-1 bg-night-mid/60 border border-border rounded-lg px-3 py-2 font-hand text-lg text-paper placeholder:text-muted-foreground/60 outline-none focus:border-cloud-pink transition-colors" />
+        <button type="submit" className="bg-cloud-pink text-ink rounded-lg px-4 hover:bg-bow transition-colors">
           <Star className="w-4 h-4" />
         </button>
       </form>
 
       <div className="space-y-2 max-h-64 overflow-y-auto pr-2">
-        {wishes.length === 0 && (
-          <p className="font-hand text-lg text-muted-foreground text-center py-6">the sky is empty… make a wish</p>
-        )}
+        {wishes.length === 0 && <p className="font-hand text-lg text-muted-foreground text-center py-6">the sky is empty… make a wish</p>}
         {wishes.map((w) => (
-          <div key={w.id} className="flex items-center gap-3 p-3 rounded-lg bg-dusk-mid/60 group">
-            <button
-              onClick={() => setWishes(wishes.map((x) => x.id === w.id ? { ...x, granted: !x.granted } : x))}
-              className="shrink-0"
-            >
-              <Star className={`w-5 h-5 transition-all ${w.granted ? "fill-sun text-sun" : "text-muted-foreground hover:text-sun"}`} />
+          <div key={w.id} className="flex items-center gap-3 p-3 rounded-lg bg-night-mid/60 group">
+            <button onClick={() => persist(wishes.map((x) => x.id === w.id ? { ...x, granted: !x.granted } : x))} className="shrink-0">
+              <Star className={`w-5 h-5 transition-all ${w.granted ? "fill-cloud-pink text-cloud-pink" : "text-muted-foreground hover:text-cloud-pink"}`} />
             </button>
-            <span className={`font-hand text-lg flex-1 ${w.granted ? "text-muted-foreground line-through" : "text-paper"}`}>
-              {w.text}
-            </span>
-            <button onClick={() => setWishes(wishes.filter((x) => x.id !== w.id))} className="opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-destructive text-xs transition-opacity">
-              ✕
-            </button>
+            <span className={`font-hand text-lg flex-1 ${w.granted ? "text-muted-foreground line-through" : "text-paper"}`}>{w.text}</span>
+            <button onClick={() => persist(wishes.filter((x) => x.id !== w.id))} className="opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-destructive text-xs transition-opacity">✕</button>
           </div>
         ))}
       </div>
