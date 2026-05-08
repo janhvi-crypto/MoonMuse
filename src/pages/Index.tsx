@@ -3,7 +3,9 @@ import { AmbientBackground } from "@/components/dreamscape/AmbientBackground";
 import { TopNav } from "@/components/dreamscape/TopNav";
 import { Hero } from "@/components/dreamscape/Hero";
 import { MusicPlayer } from "@/components/dreamscape/MusicPlayer";
-import { SpotifyPlayer } from "@/components/dreamscape/SpotifyPlayer";
+import { MyMusicPlayer } from "@/components/dreamscape/MyMusicPlayer";
+import { Photobooth } from "@/components/dreamscape/Photobooth";
+import { VisionBoard } from "@/components/dreamscape/VisionBoard";
 import { SoundscapeMixer } from "@/components/dreamscape/SoundscapeMixer";
 import { BreathingOrb } from "@/components/dreamscape/BreathingOrb";
 import { Scrapbook } from "@/components/dreamscape/Scrapbook";
@@ -43,7 +45,7 @@ const Index = () => {
         <section>
           <SectionLabel chapter="CHAPTER ONE" title="the music room" sub="press play — the night begins" />
           <div className="grid gap-6 md:grid-cols-2">
-            <SpotifyPlayer />
+            <MyMusicPlayer />
             <MusicPlayer />
           </div>
         </section>
@@ -113,6 +115,18 @@ const Index = () => {
         <section>
           <SectionLabel chapter="CHAPTER EIGHT" title="✦ memory calendar ✦" sub="every wish, dream & diary in one little month" />
           <MemoryCalendar />
+        </section>
+
+        {/* SCENE 11 — vision board */}
+        <section>
+          <SectionLabel chapter="CHAPTER NINE" title="✦ vision board ✦" sub="the year you're dreaming into being" />
+          <VisionBoard />
+        </section>
+
+        {/* SCENE 12 — photobooth */}
+        <section>
+          <SectionLabel chapter="CHAPTER TEN" title="pinky photobooth" sub="3 little frames · stickers · download forever" />
+          <Photobooth />
         </section>
       </main>
 
