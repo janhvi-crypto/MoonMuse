@@ -5,13 +5,12 @@ import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { memoryStore, type Memory } from "@/lib/memory-store";
 import { entriesStore, type Entry } from "@/lib/entries-store";
+import { cloudSync } from "@/lib/cloud-sync";
 
 interface Wish { id: string; text: string; granted: boolean; createdAt?: number; }
 const WISH_KEY = "sundown_wishes";
 
-const readWishes = (): Wish[] => {
-  try { return JSON.parse(localStorage.getItem(WISH_KEY) || "[]"); } catch { return []; }
-};
+const readWishes = (): Wish[] => cloudSync.get<Wish[]>(WISH_KEY, []);
 
 const wishDate = (w: Wish) =>
   w.createdAt ? new Date(w.createdAt).toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10);
@@ -31,9 +30,8 @@ export const MemoryCalendar = () => {
     refreshAll();
     const u1 = memoryStore.subscribe(refreshAll);
     const u2 = entriesStore.subscribe(refreshAll);
-    const onStorage = () => setWishes(readWishes());
-    window.addEventListener("storage", onStorage);
-    return () => { u1(); u2(); window.removeEventListener("storage", onStorage); };
+    const u3 = cloudSync.subscribe(WISH_KEY, refreshAll);
+    return () => { u1(); u2(); u3(); };
   }, []);
 
   // Index by ISO date
