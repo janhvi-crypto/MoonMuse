@@ -64,7 +64,7 @@ export const MyMusicPlayer = () => {
   };
   const clearSlot = (i: number) => {
     const next = [...slots];
-    next[i] = { name: DEFAULT_NAMES[i], src: null };
+    next[i] = { name: DEFAULT_NAMES[i], src: PRESET_SRC[i] ?? null };
     persist(next);
   };
   const renameSlot = (i: number, name: string) => {
@@ -80,8 +80,8 @@ export const MyMusicPlayer = () => {
   };
   const skip = (d: number) => {
     let i = idx;
-    for (let k = 0; k < 10; k++) {
-      i = (i + d + 10) % 10;
+    for (let k = 0; k < SLOTS; k++) {
+      i = (i + d + SLOTS) % SLOTS;
       if (slots[i].src) { setIdx(i); setPlaying(false); return; }
     }
   };
