@@ -4,7 +4,7 @@ This web app is an aesthetic self-care and wellness platform designed to provide
 
 *Disclaimer* : This is small scale deployment only. for large scale deployment, always use royalty free music track.
 
-Deployed Link:
+Deployed Link: https://moonmuses.vercel.app/
 
 ## Run locally
 
