@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AmbientBackground } from "@/components/dreamscape/AmbientBackground";
 import { TopNav } from "@/components/dreamscape/TopNav";
 import { Hero } from "@/components/dreamscape/Hero";
-import { MusicPlayer } from "@/components/dreamscape/MusicPlayer";
+
 import { MyMusicPlayer } from "@/components/dreamscape/MyMusicPlayer";
 import { Photobooth } from "@/components/dreamscape/Photobooth";
 import { VisionBoard } from "@/components/dreamscape/VisionBoard";
