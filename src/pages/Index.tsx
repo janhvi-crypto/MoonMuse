@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AmbientBackground } from "@/components/dreamscape/AmbientBackground";
 import { TopNav } from "@/components/dreamscape/TopNav";
 import { Hero } from "@/components/dreamscape/Hero";
-import { MusicPlayer } from "@/components/dreamscape/MusicPlayer";
+
 import { MyMusicPlayer } from "@/components/dreamscape/MyMusicPlayer";
 import { Photobooth } from "@/components/dreamscape/Photobooth";
 import { VisionBoard } from "@/components/dreamscape/VisionBoard";
@@ -44,10 +44,7 @@ const Index = () => {
         {/* SCENE 2 — the music room */}
         <section>
           <SectionLabel chapter="CHAPTER ONE" title="the music room" sub="press play — the night begins" />
-          <div className="grid gap-6 md:grid-cols-2">
-            <MyMusicPlayer />
-            <MusicPlayer />
-          </div>
+          <MyMusicPlayer />
         </section>
 
         {/* SCENE 3 — the window — soundscape + breathing */}
