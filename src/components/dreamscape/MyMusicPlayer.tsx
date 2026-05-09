@@ -21,17 +21,17 @@ type Track = { name: string; src: string; coverIdx: number };
 // Permanent internal tracks.
 // Put your mp3 files in: `public/audio/` with these filenames (or change the `src` paths here).
 const TRACKS: Track[] = [
-  { name: "moon dust", src: "/audio/song1.mp3", coverIdx: 0 },
-  { name: "pink curtains", src: "/audio/song2.mp3", coverIdx: 1 },
-  { name: "lilac sky", src: "/audio/song3.mp3", coverIdx: 2 },
-  { name: "soft hills", src: "/audio/song4.mp3", coverIdx: 3 },
-  { name: "cassette love", src: "/audio/song5.mp3", coverIdx: 4 },
-  { name: "sakura night", src: "/audio/song6.mp3", coverIdx: 5 },
-  { name: "sleepy cat", src: "/audio/song7.mp3", coverIdx: 6 },
-  { name: "balloon flight", src: "/audio/song8.mp3", coverIdx: 7 },
-  { name: "ocean lull", src: "/audio/song9.mp3", coverIdx: 8 },
-  { name: "lavender tea", src: "/audio/song10.mp3", coverIdx: 9 },
-  { name: "lofi dream", src: "/audio/song11.mp3", coverIdx: 10 },
+  { name: "something about you", src: "/audio/song1.mp3", coverIdx: 0 },
+  { name: "Fallen Star", src: "/audio/song2.mp3", coverIdx: 1 },
+  { name: "Souvenir", src: "/audio/song3.mp3", coverIdx: 2 },
+  { name: "Summer of Love", src: "/audio/song4.mp3", coverIdx: 3 },
+  { name: "Lost in Japan", src: "/audio/song5.mp3", coverIdx: 4 },
+  { name: "come down", src: "/audio/song6.mp3", coverIdx: 5 },
+  { name: "Her Interlude", src: "/audio/song7.mp3", coverIdx: 6 },
+  { name: "her eyes", src: "/audio/song8.mp3", coverIdx: 7 },
+  { name: "2000s Pop Punk RnB", src: "/audio/song9.mp3", coverIdx: 8 },
+  { name: "you said you were sorry", src: "/audio/song10.mp3", coverIdx: 9 },
+  { name: "dream", src: "/audio/song11.mp3", coverIdx: 10 },
 ];
 
 export const MyMusicPlayer = () => {
