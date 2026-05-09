@@ -2,6 +2,8 @@
 
 This web app is an aesthetic self-care and wellness platform designed to provide users with a calming digital safe space. It combines features like music playlists, journaling, mood tracking, vision boards, memory calendars, daily fortune cards, and photo memories into one immersive experience. The platform helps users relax, express emotions, organize thoughts, preserve memories, and practice mindfulness through an interactive and visually soothing interface. The goal of the app is to improve emotional well-being and create a personalized comfort space for users in their daily lives. 
 
+*Disclaimer* : This is small scale deployment only. for large scale deployment, always use royalty free muusic track.
+
 Deployed Link:
 
 ## Run locally
