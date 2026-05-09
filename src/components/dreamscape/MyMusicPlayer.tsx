@@ -37,6 +37,7 @@ const TRACKS: Track[] = [
 export const MyMusicPlayer = () => {
   const [idx, setIdx] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const userPausedRef = useRef(false);
   const [vol, setVol] = useState(70);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -54,15 +55,34 @@ export const MyMusicPlayer = () => {
 
   const cur = TRACKS[idx];
 
+  // If we're in "playing" mode, auto-play whenever the track changes.
+  // If the user explicitly paused, don't auto-resume.
+  useEffect(() => {
+    const a = audioRef.current;
+    if (!a) return;
+    if (!playing) return;
+    if (userPausedRef.current) return;
+
+    const tryPlay = async () => {
+      try { await a.play(); }
+      catch (e) { void e; setPlaying(false); }
+    };
+    void tryPlay();
+  }, [idx, playing]);
+
   const toggle = async () => {
     const a = audioRef.current; if (!a) return;
-    if (playing) { a.pause(); setPlaying(false); }
+    if (playing) { userPausedRef.current = true; a.pause(); setPlaying(false); }
     else {
+      userPausedRef.current = false;
       try { await a.play(); setPlaying(true); }
       catch (e) { void e; }
     }
   };
-  const skip = (d: number) => { setIdx((i) => (i + d + TRACKS.length) % TRACKS.length); setPlaying(false); };
+  const skip = (d: number) => {
+    setIdx((i) => (i + d + TRACKS.length) % TRACKS.length);
+    // keep current play/pause intent
+  };
 
   const fmt = (s: number) => {
     if (!isFinite(s)) return "0:00";
@@ -72,7 +92,16 @@ export const MyMusicPlayer = () => {
 
   return (
     <div className="dream-card rounded-2xl p-4 md:p-5 grain animate-fade-up">
-      <audio ref={audioRef} src={cur.src} onEnded={() => skip(1)} />
+      <audio
+        ref={audioRef}
+        src={cur.src}
+        onEnded={() => {
+          // Loop through tracks continuously unless user paused.
+          if (userPausedRef.current) return;
+          setIdx((i) => (i + 1) % TRACKS.length);
+          setPlaying(true);
+        }}
+      />
 
       <div className="flex items-center gap-2 mb-4 text-cloud-pink">
         <Music2 className="w-4 h-4" />
