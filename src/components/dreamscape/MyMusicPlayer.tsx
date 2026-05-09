@@ -13,18 +13,22 @@ import cover7 from "@/assets/covers/cover-7.jpg";
 import cover8 from "@/assets/covers/cover-8.jpg";
 import cover9 from "@/assets/covers/cover-9.jpg";
 import cover10 from "@/assets/covers/cover-10.jpg";
+import cover11 from "@/assets/covers/cover-11.jpg";
 
-const COVERS = [cover1, cover2, cover3, cover4, cover5, cover6, cover7, cover8, cover9, cover10];
+const COVERS = [cover1, cover2, cover3, cover4, cover5, cover6, cover7, cover8, cover9, cover10, cover11];
 const DEFAULT_NAMES = [
   "moon dust", "pink curtains", "lilac sky", "soft hills", "cassette love",
   "sakura night", "sleepy cat", "balloon flight", "ocean lull", "lavender tea",
+  "lofi dream",
 ];
-const KEY = "moonlit_my_songs";
+const PRESET_SRC: Record<number, string> = { 10: "/audio/lofi-dream.mp3" };
+const KEY = "moonlit_my_songs_v2";
+const SLOTS = 11;
 
 interface Slot { name: string; src: string | null; }
 
 const initial = (): Slot[] =>
-  Array.from({ length: 10 }, (_, i) => ({ name: DEFAULT_NAMES[i], src: null }));
+  Array.from({ length: SLOTS }, (_, i) => ({ name: DEFAULT_NAMES[i], src: PRESET_SRC[i] ?? null }));
 
 export const MyMusicPlayer = () => {
   const [slots, setSlots] = useState<Slot[]>(() => cloudSync.get<Slot[]>(KEY, initial()));
