@@ -1,7 +1,7 @@
-## Dreamscape Jukebox (Moonlit)
+## MoonMuse
 
-A dreamy, ambient “night desk” web app built with React + Vite + Tailwind + shadcn/ui.  
-It includes a compact **Mixtape** mini-player (predefined tracks), plus cozy interactive sections like a scrapbook, fortunes, soundscapes, and more.
+This web app is an aesthetic self-care and wellness platform designed to provide users with a calming digital safe space. It combines features like music playlists, journaling, mood tracking, vision boards, memory calendars, daily fortune cards, and photo memories into one immersive experience. The platform helps users relax, express emotions, organize thoughts, preserve memories, and practice mindfulness through an interactive and visually soothing interface. The goal of the app is to improve emotional well-being and create a personalized comfort space for users in their daily lives. 
+
 
 ## Run locally
 
