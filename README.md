@@ -2,6 +2,7 @@
 
 This web app is an aesthetic self-care and wellness platform designed to provide users with a calming digital safe space. It combines features like music playlists, journaling, mood tracking, vision boards, memory calendars, daily fortune cards, and photo memories into one immersive experience. The platform helps users relax, express emotions, organize thoughts, preserve memories, and practice mindfulness through an interactive and visually soothing interface. The goal of the app is to improve emotional well-being and create a personalized comfort space for users in their daily lives. 
 
+Deployed Link:
 
 ## Run locally
 
@@ -33,7 +34,7 @@ The Mixtape player uses hardcoded tracks from:
 Audio files are loaded from:
 - `public/audio/`
 
-By default, the player expects these files to exist:
+By default, these files exist:
 - `public/audio/song1.mp3`
 - `public/audio/song2.mp3`
 - …
@@ -54,6 +55,3 @@ To change filenames or track titles, edit the `TRACKS` array and commit your mp3
 - Tailwind CSS
 - shadcn/ui (Radix UI primitives)
 
-## Notes
-- Large mp3 files can make the repo heavy. If needed, use Git LFS or host audio elsewhere.
-- Only commit audio you’re allowed to distribute.
