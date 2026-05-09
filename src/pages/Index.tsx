@@ -44,10 +44,7 @@ const Index = () => {
         {/* SCENE 2 — the music room */}
         <section>
           <SectionLabel chapter="CHAPTER ONE" title="the music room" sub="press play — the night begins" />
-          <div className="grid gap-6 md:grid-cols-2">
-            <MyMusicPlayer />
-            <MusicPlayer />
-          </div>
+          <MyMusicPlayer />
         </section>
 
         {/* SCENE 3 — the window — soundscape + breathing */}
