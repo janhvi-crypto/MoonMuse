@@ -5,31 +5,40 @@ import { toast } from "sonner";
 
 const STICKER_SET = [
   "🌸","✨","💗","💜","🎀","🌙","⭐","🍓","🍒","🌈","☁️","🦋","💌","🪐","🍵",
-  "🥺","🥰","😴","🌷","🍡","🧸","🍰","💖","🫧","🌟",
+  "🥺","🥰","😴","🌷","🍡","🧸","🍰","💖","🫧","🌟","🐚","🐠","🦑","🌊","🪸",
 ];
 const FRAMES = [
-  { id: "pink", label: "pink", color: "#ffd6e7" },
-  { id: "lilac", label: "lilac", color: "#d9c6ff" },
-  { id: "cream", label: "cream", color: "#fff7ef" },
-  { id: "babyblue", label: "baby blue", color: "#cfe8ff" },
-  { id: "plum", label: "plum", color: "#8b6fae" },
+  { id: "pink",     label: "pink",      color: "#ffd6e7", deco: "#ff8cb6" },
+  { id: "lilac",    label: "lilac",     color: "#d9c6ff", deco: "#a98cff" },
+  { id: "cream",    label: "cream",     color: "#fff7ef", deco: "#e2b58a" },
+  { id: "babyblue", label: "baby blue", color: "#cfe8ff", deco: "#7fb6e8" },
+  { id: "mint",     label: "mint",      color: "#c8f0d9", deco: "#4fb38a" },
+  { id: "butter",   label: "butter",    color: "#fff0b5", deco: "#e0b550" },
+  { id: "plum",     label: "plum",      color: "#8b6fae", deco: "#ffd6e7" },
 ];
+const STRIP_OPTIONS = [2, 3, 5];
 
 interface Placed { id: string; emoji: string; x: number; y: number; rot: number; size: number; }
+
+const PHOTO_W = 320;
+const PHOTO_H = 240; // rectangle, like the reference image
 
 export const Photobooth = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const stripRef = useRef<HTMLDivElement>(null);
   const dragging = useRef<{ id: string; ox: number; oy: number } | null>(null);
   const [streaming, setStreaming] = useState(false);
-  const [shots, setShots] = useState<string[]>([]);   // 3 photos
+  const [stripCount, setStripCount] = useState<2 | 3 | 5>(3);
+  const [shots, setShots] = useState<string[]>([]);
   const [stickers, setStickers] = useState<Placed[]>([]);
   const [frame, setFrame] = useState(FRAMES[0]);
   const [count, setCount] = useState<number | null>(null);
 
   const start = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user", width: 480, height: 480 }, audio: false });
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "user", width: 640, height: 480 }, audio: false,
+      });
       if (videoRef.current) { videoRef.current.srcObject = stream; await videoRef.current.play(); }
       setStreaming(true);
     } catch { toast.error("camera permission needed ✦"); }
@@ -40,24 +49,32 @@ export const Photobooth = () => {
   }, []);
 
   const snap = () => {
-    const v = videoRef.current; if (!v) return;
+    const v = videoRef.current; if (!v) return null;
     const c = document.createElement("canvas");
-    const size = Math.min(v.videoWidth, v.videoHeight);
-    c.width = 320; c.height = 320;
+    c.width = PHOTO_W; c.height = PHOTO_H;
     const ctx = c.getContext("2d")!;
-    // mirror
-    ctx.translate(320, 0); ctx.scale(-1, 1);
-    const sx = (v.videoWidth - size) / 2, sy = (v.videoHeight - size) / 2;
-    ctx.drawImage(v, sx, sy, size, size, 0, 0, 320, 320);
-    return c.toDataURL("image/jpeg", 0.9);
+    ctx.translate(PHOTO_W, 0); ctx.scale(-1, 1);
+    // crop to 4:3 rectangle (centered)
+    const targetAspect = PHOTO_W / PHOTO_H;
+    const vAspect = v.videoWidth / v.videoHeight;
+    let sw = v.videoWidth, sh = v.videoHeight, sx = 0, sy = 0;
+    if (vAspect > targetAspect) {
+      sw = v.videoHeight * targetAspect; sx = (v.videoWidth - sw) / 2;
+    } else {
+      sh = v.videoWidth / targetAspect; sy = (v.videoHeight - sh) / 2;
+    }
+    ctx.drawImage(v, sx, sy, sw, sh, 0, 0, PHOTO_W, PHOTO_H);
+    return c.toDataURL("image/jpeg", 0.92);
   };
 
   const takeStrip = async () => {
     setShots([]);
-    for (let i = 0; i < 3; i++) {
+    const collected: string[] = [];
+    for (let i = 0; i < stripCount; i++) {
       for (let n = 3; n > 0; n--) { setCount(n); await new Promise(r => setTimeout(r, 700)); }
       setCount(null);
-      const url = snap(); if (url) setShots((s) => [...s, url]);
+      const url = snap();
+      if (url) { collected.push(url); setShots([...collected]); }
       await new Promise(r => setTimeout(r, 400));
     }
   };
@@ -87,26 +104,40 @@ export const Photobooth = () => {
   const onUp = () => { dragging.current = null; };
 
   const download = async () => {
-    if (shots.length < 3) { toast.error("take a strip first ✦"); return; }
-    const w = 360, photoH = 320, padTop = 24, padBottom = 60, gap = 12;
-    const h = padTop + photoH * 3 + gap * 2 + padBottom;
+    if (shots.length < stripCount) { toast.error("take a strip first ✦"); return; }
+    const padX = 28, padTop = 60, padBottom = 80, gap = 14;
+    const w = PHOTO_W + padX * 2;
+    const h = padTop + PHOTO_H * stripCount + gap * (stripCount - 1) + padBottom;
     const c = document.createElement("canvas"); c.width = w; c.height = h;
     const ctx = c.getContext("2d")!;
-    ctx.fillStyle = frame.color; ctx.fillRect(0, 0, w, h);
+    // soft outer rounded panel
+    ctx.fillStyle = frame.color;
+    ctx.fillRect(0, 0, w, h);
+    // decorative double border
+    ctx.strokeStyle = frame.deco; ctx.lineWidth = 4;
+    ctx.strokeRect(10, 10, w - 20, h - 20);
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(18, 18, w - 36, h - 36);
+    // header text
+    ctx.fillStyle = frame.deco;
+    ctx.font = "bold 22px 'Fraunces', serif";
+    ctx.textAlign = "center";
+    ctx.fillText("✦ moonlit booth ✦", w / 2, 40);
     // photos
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < stripCount; i++) {
       const img = new Image(); img.src = shots[i];
       await new Promise((r) => { img.onload = r; });
-      const x = (w - photoH) / 2, y = padTop + i * (photoH + gap);
-      ctx.drawImage(img, x, y, photoH, photoH);
+      const x = padX, y = padTop + i * (PHOTO_H + gap);
+      ctx.fillStyle = "#fff";
+      ctx.fillRect(x - 4, y - 4, PHOTO_W + 8, PHOTO_H + 8);
+      ctx.drawImage(img, x, y, PHOTO_W, PHOTO_H);
     }
-    // footer text
-    ctx.fillStyle = "#8b6fae";
+    // footer
+    ctx.fillStyle = frame.id === "plum" ? "#fff" : "#8b6fae";
     ctx.font = "italic 18px 'Fraunces', serif";
-    ctx.textAlign = "center";
-    ctx.fillText("✦ moonlit photobooth ✦", w / 2, h - 28);
-    ctx.font = "14px 'Caveat', cursive";
-    ctx.fillText(new Date().toLocaleDateString(), w / 2, h - 10);
+    ctx.fillText("a quiet little memory ✦", w / 2, h - 42);
+    ctx.font = "16px 'Caveat', cursive";
+    ctx.fillText(new Date().toLocaleDateString(), w / 2, h - 22);
     // stickers
     ctx.textAlign = "center"; ctx.textBaseline = "middle";
     stickers.forEach((s) => {
@@ -135,7 +166,10 @@ export const Photobooth = () => {
       <div className="grid md:grid-cols-2 gap-6">
         {/* camera */}
         <div>
-          <div className="relative rounded-2xl overflow-hidden bg-night-deep aspect-square">
+          <div
+            className="relative rounded-2xl overflow-hidden bg-night-deep mx-auto"
+            style={{ aspectRatio: "4/3", maxWidth: 480 }}
+          >
             <video ref={videoRef} muted playsInline className="w-full h-full object-cover" style={{ transform: "scaleX(-1)" }} />
             {!streaming && (
               <button onClick={start}
@@ -149,9 +183,22 @@ export const Photobooth = () => {
               </div>
             )}
           </div>
+
+          <div className="mt-3">
+            <p className="font-hand text-xl text-cloud-pink mb-1">how many photos?</p>
+            <div className="flex gap-2">
+              {STRIP_OPTIONS.map((n) => (
+                <button key={n} onClick={() => { setStripCount(n as 2 | 3 | 5); setShots([]); }}
+                  className={`px-4 py-1.5 rounded-full font-hand text-lg ${stripCount === n ? "bg-cloud-pink text-ink" : "bg-night-mid/60 text-paper/70 hover:text-cloud-pink"}`}>
+                  {n} strip
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div className="flex gap-2 mt-3">
             <Button onClick={takeStrip} disabled={!streaming} className="flex-1 bg-cloud-pink text-ink hover:bg-bow">
-              <Sparkles className="w-4 h-4 mr-2" /> take 3-photo strip
+              <Sparkles className="w-4 h-4 mr-2" /> take {stripCount}-photo strip
             </Button>
             {shots.length > 0 && (
               <Button variant="ghost" onClick={() => { setShots([]); setStickers([]); }} className="text-paper/70">
@@ -166,27 +213,51 @@ export const Photobooth = () => {
               {FRAMES.map((f) => (
                 <button key={f.id} onClick={() => setFrame(f)}
                   title={f.label}
-                  className={`w-8 h-8 rounded-full border-2 ${frame.id === f.id ? "border-cloud-pink scale-110" : "border-white/30"}`}
+                  className={`w-9 h-9 rounded-full border-2 ${frame.id === f.id ? "border-cloud-pink scale-110" : "border-white/30"}`}
                   style={{ background: f.color }} />
               ))}
             </div>
           </div>
         </div>
 
-        {/* strip preview */}
+        {/* strip preview — cute rectangle frame */}
         <div>
           <div
             ref={stripRef}
             onPointerMove={onMove} onPointerUp={onUp}
-            className="relative mx-auto rounded-2xl overflow-hidden touch-none"
-            style={{ width: 220, background: frame.color, padding: "14px 14px 36px", boxShadow: "var(--shadow-paper)" }}
+            className="relative mx-auto touch-none"
+            style={{
+              width: 240,
+              background: frame.color,
+              padding: "32px 18px 56px",
+              boxShadow: "0 12px 30px rgba(40,30,60,0.25)",
+              borderRadius: 18,
+              outline: `3px solid ${frame.deco}`,
+              outlineOffset: -8,
+            }}
           >
-            {[0, 1, 2].map((i) => (
-              <div key={i} className="aspect-square mb-2 bg-white/40 rounded-md overflow-hidden">
-                {shots[i] ? <img src={shots[i]} alt="" className="w-full h-full object-cover" /> : null}
+            <p className="absolute top-3 left-0 right-0 text-center font-serif italic text-sm" style={{ color: frame.deco }}>
+              ✦ moonlit booth ✦
+            </p>
+            {Array.from({ length: stripCount }).map((_, i) => (
+              <div key={i}
+                className="bg-white/90 rounded-sm overflow-hidden mb-2"
+                style={{
+                  aspectRatio: `${PHOTO_W}/${PHOTO_H}`,
+                  padding: 3,
+                  boxShadow: "0 2px 4px rgba(0,0,0,0.08)",
+                }}
+              >
+                {shots[i] ? (
+                  <img src={shots[i]} alt="" className="w-full h-full object-cover rounded-sm" />
+                ) : (
+                  <div className="w-full h-full bg-paper/10 rounded-sm" />
+                )}
               </div>
             ))}
-            <p className="font-serif italic text-center text-ink text-sm mt-1">moonlit ✦</p>
+            <p className="font-hand text-center text-ink text-sm mt-2">
+              {new Date().toLocaleDateString()} ✦
+            </p>
             {stickers.map((s) => (
               <button key={s.id}
                 onPointerDown={(e) => onDown(e, s)}
