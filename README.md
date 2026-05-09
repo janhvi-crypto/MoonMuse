@@ -41,7 +41,7 @@ By default, these files exist:
 - `public/audio/song11.mp3`
 
 To change filenames or track titles, edit the `TRACKS` array and commit your mp3 files (if you want them to be available after pushing to GitHub / deploying).
-You can replace the Uaudio with your own tracks. Use royalty-free music track for safety.
+You can replace the audio/songs with your own tracks. Use royalty-free music track for safety.
 
 ## Project scripts
 - **dev**: `npm run dev`
