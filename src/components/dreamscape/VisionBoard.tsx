@@ -77,7 +77,7 @@ export const VisionBoard = () => {
     addItem({ type: "text", text, color, bold: false, italic: true, size: 28 });
 
   const addWishlist = () => {
-    const wishes = cloudSync.get<{ text: string }[]>("moonlit_wishlist", []);
+    const wishes = cloudSync.get<{ text: string }[]>("sundown_wishes", []);
     if (!wishes.length) { toast.error("write a wish first ✦"); return; }
     addText("✦ wishlist ✦\n" + wishes.slice(0, 8).map((w) => `· ${w.text}`).join("\n"), "#d6336c");
   };
